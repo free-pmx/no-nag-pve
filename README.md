@@ -1,6 +1,8 @@
 # Proxmox Virtual Environment (PVE 8.2)
 ## No valid subscription popup removal
 
+### TL;DR [below](#equal-single-command-alternative).
+
 This is to assist countless people (not only) on the official Proxmox forum [1] asking about the same ("You do not have a valid subscription for this server.") and is published under AGPL [2] as is the original Proxmox Virtual Environment (PVE).
 
 _It was published here as a reaction to having the contributing back rewarded with censorship on the official Proxmox forum._
@@ -9,9 +11,11 @@ Originally, it was also meant to protect an average PVE user from applying intri
 
 Finally, it is also meant to promote better coding style.
 
+---
+
 _Valid and tested as of version 8.2.4. Preferably apply via local console or SSH, clear browser cache afterwards._
 
-Patchfile (save locally into a `$PATCHFILE` e.g. `pve8.2.4-no-nag.patch` for re-use):
+#### Patchfile (save locally into a `$PATCHFILE` e.g. `pve8.2.4-no-nag.patch` for re-use):
 
 ```diff
 --- proxmoxlib.js
@@ -42,7 +46,7 @@ Patchfile (save locally into a `$PATCHFILE` e.g. `pve8.2.4-no-nag.patch` for re-
      );
 ```
 
-Instructions:
+#### Instructions:
 
 Copy the `$PATCHFILE` over from your local machine onto the `$NODE`:
 ```sh
@@ -73,7 +77,8 @@ _proxmox-ve: 8.2.0, proxmox-widget-toolkit: 4.2.3_
 ```sh
 (cd /usr/share/javascript/proxmox-widget-toolkit/ &&
  sha256sum -c <<< "fecc2dbc3a458442186965f0087711aecf519f797207c4dd891806ccba3636f3 proxmoxlib.js" &&
- sed -i.bak '579d;563,577d' proxmoxlib.js && systemctl reload-or-restart pveproxy &&
+ sed -i.bak '579d;563,577d' proxmoxlib.js &&
+ systemctl reload-or-restart pveproxy &&
  echo DONE - CLEAR YOUR BROWSER CACHE)
 ```
 This checks for the file content to be exactly same as to which the patch would have been made and then deletes the same lines in-place.
