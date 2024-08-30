@@ -1,9 +1,9 @@
 # Proxmox Virtual Environment (PVE 8.2)
 ## No valid subscription popup removal
 
-### TL;DR [below](#equal-single-command-alternative).
+#### You can choose to follow either regular [(1) patch instructions](#1-patch) or a copy & paste [(2) alternative](#2-no-patch-alternative).
 
-This is to assist countless people (not only) on the official Proxmox forum [1] asking about the same ("You do not have a valid subscription for this server.") and is published under AGPL [2] as is the original Proxmox Virtual Environment (PVE).
+This is to assist countless people (not only) on the official Proxmox forum [[1]] asking about the same ("You do not have a valid subscription for this server.") and is published under AGPL [[2]] as is the original Proxmox Virtual Environment (PVE).
 
 _It was published here as a reaction to having the contributing back rewarded with censorship on the official Proxmox forum._
 
@@ -12,6 +12,8 @@ Originally, it was also meant to protect an average PVE user from applying intri
 Finally, it is also meant to promote better coding style.
 
 ---
+
+### 1. Patch
 
 _Valid and tested as of version 8.2.4. Preferably apply via local console or SSH, clear browser cache afterwards._
 
@@ -71,8 +73,10 @@ systemctl restart pveproxy
 
 ---
 
-### Equal single-command alternative 
-_proxmox-ve: 8.2.0, proxmox-widget-toolkit: 4.2.3_
+### 2. No-patch alternative 
+_Valid and tested: proxmox-ve: 8.2.0, proxmox-widget-toolkit: 4.2.3_
+
+You can simply copy & paste the following into your terminal, then execute.
 
 ```sh
 (cd /usr/share/javascript/proxmox-widget-toolkit/ &&
@@ -81,12 +85,25 @@ _proxmox-ve: 8.2.0, proxmox-widget-toolkit: 4.2.3_
  systemctl reload-or-restart pveproxy &&
  echo DONE - CLEAR YOUR BROWSER CACHE)
 ```
-This checks for the file content to be exactly same as to which the patch would have been made and then deletes the same lines in-place.
+This checks for the file content to be exactly same as to which the patch would have been made and then deletes the same lines in-place, while a backup file is retained.
 
-You can help yourself examining the command via explainshell [3].
+You can help yourself examining the command via explainshell [[3]].
 
+---
 
-NOTE: If you break anything, you will need to: `apt reinstall proxmox-widget-toolkit`
+### 3. Recovery
+
+Having followed the instructions above, you may copy back the backup copy:
+
+```sh
+mv /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js{.bak,}
+```
+
+Failing everything else, you may need to:
+
+```sh
+apt reinstall proxmox-widget-toolkit
+```
 
 [1]: https://forum.proxmox.com
 [2]: https://www.gnu.org/licenses/agpl-3.0.md
